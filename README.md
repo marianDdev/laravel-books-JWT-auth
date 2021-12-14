@@ -1,66 +1,60 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## BOOKS
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Steps to follow:
+From terminal
+1. Run git clone https://github.com/marianDdev/laravel-books-JWT-auth.git
+2. Run cd laravel-books-JWT-auth
+3. Run composer install
+4. Run cp .env.example .env (Add your DB credentials to .env)
+5. Run php artisan key:generate
+6. Run php artisan migrate && php artisan db:seed
+7. Run php artisan serve
+8. Go to link localhost:8000
+    * If you are using macos, I recommend skipping steps 7 and 8 and install Valet instead, because configures your Mac to always run Nginx in the background when your machine starts and proxies all requests on the *.test domain to point to sites installed on your local machine.
+        From terminal from inside laravel-books-JWT-auth directory
+        . Run valet install
+        . Run valet link books
+        . Run valet secure books
+        . Go to link https://books.test
+9. Register to an account from the list with valid email and password
+10. If you want to add a book, from your dashboard click on the "Add a book" link and fill the form.
+11. If you want to see all the books added to your account, click on the "List <you account's name> Books" link.
+12. You can only delete a book from your account if it was added 2 days ago. Otherwise, you will see this text: 
+"This book was added more than two days ago and cannot be deleted." instead of a delete button.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+####STEPS FOR DEVELOPERS TO FETCH BOOKS OR A SPECIFIC BOOK
+For API testing I recommend using POSTMAN or any other collaboration platform for API development.    
+Before jumping to POSTMAN, in your project, go to config/auth.php and change the default guard value from "web" to "api".
+In POSTMAN.
+1. If you haven't registered yet from the browser, you can REGISTER from POSTMAN
+    Make a POST request to https://books.test/api/register with the following params:
+     - name
+     - email
+     - password (min 6 characters)
+     - password_confirmation
+     - account_id (in integer from 1 to 5)
+    The success response has status code 201 and should look like this:
+    {
+        "message": "User successfully registered on account with id 1",
+        "user": {
+            "name": "Your Name",
+            "email": "your@email.com",
+            "account_id": "1",
+            "updated_at": "2021-12-14T21:37:21.000000Z",
+            "created_at": "2021-12-14T21:37:21.000000Z",
+            "id": 18
+        }
+    }
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    2. For login make a GET request to  https://books.test/api/login. The body of the request must be form-data with the following key => value pairs:
+    KEY  ------------------- VALUE
+    email => youremail@email.com
+    password = your-password
+    
+    Copy the token without double quotes from the response body
+   
+    3. For fetching the books added to your account, make a GET request to https://books.test/api/books, select the authorization type Bearer Token and insert the token from the earlier step.
+    4. For getting a book added to your account, make a GET request to https://books.test/api/books/{id}, select the authorization type Bearer Token and insert the token from the earlier step.
+        If the book id added by you as a route param doesn't exist, you will receive a list with the available books ids in the response 
